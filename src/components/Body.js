@@ -60,8 +60,6 @@ function Body() {
             <h3>Dove siamo</h3>
             <img className="body_image" src={ingressoHotel} alt="body_img" />
             <ul>
-              
-              
               <li>97 km dall'Aeroporto Malpensa (MI)</li>
               <li>53 km dall'Aeroporto di Linate (MI)</li>
               <li>8.9 km dall'Aeroporto Orio al Serio</li>
@@ -69,6 +67,14 @@ function Body() {
               <li>1.9 km dal centro città</li>
               <li>0.9 km da Città Alta (centro storico)</li>
             </ul>
+          </div>
+        </div>
+        <div className="page__footer">
+          <div>
+            <p>
+              © Copyright 2021 - Hotel Santa Caterina - Via Alberico da Rosciate
+              11/13, Bergamo, Italia - C.F./P.IVA 03477950160
+            </p>
           </div>
         </div>
       </div>

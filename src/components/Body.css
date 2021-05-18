@@ -71,6 +71,28 @@
    content:"\2713\0020";
 }
 
+.page__footer{
+   background-color: rgba(0, 0, 0, 0.932);
+   color: white;
+   height: 300px;
+   width: 100%;
+   position: relative;
+}
+
+.page__footer > div{
+   height: 100px;
+   width: 100%;
+   position: absolute;
+   bottom: 0;
+   left: 0;
+   display: flex;
+   flex-wrap: wrap;
+   align-content: center;
+   justify-content: center;
+   border-top-style:solid;
+   border-radius: 30%;
+   border-color: rgba(124, 118, 118, 0.562);
+}
 ul { list-style-type: none; }
 
 
