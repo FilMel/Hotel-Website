@@ -13,7 +13,6 @@
   height: 90vh;
   align-items: center;
   justify-content: center;
-  font-size: 3rem;
 }
 
 .services {
@@ -33,9 +32,9 @@
   font-size: 100px;
 }
 
-/*.book {
+.book {
   background-size: cover;
   background-repeat: no-repeat;
   color: #fff;
   font-size: 100px;
-}*/
+}
