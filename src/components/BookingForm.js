@@ -1,11 +1,18 @@
 import React from "react";
-import "/.BookingForm.css";
+import "./BookingForm.css";
+import HeroSection from "./HeroSection";
+import Cyber from "./videos/cyber.mp4";
 
 const Form = () => {
   return (
-    <form action="reservation.php" method="post">
-      <div class="elem-group">
-        <label for="name">Your Name</label>
+      <div className="page_wrapper">
+    <video autoPlay loop muted>
+    <source src={Cyber} type="video/mp4" />
+    </video>
+    <div className="form_wrapper">
+    <form className="form" action="reservation.php" method="post">
+      <div className="elem-group">
+        <label for="name">Il tuo Nome</label>
         <input
           type="text"
           id="name"
@@ -14,8 +21,8 @@ const Form = () => {
           required
         />
       </div>
-      <div class="elem-group">
-        <label for="email">Your E-mail</label>
+      <div className="elem-group">
+        <label for="email">La tua Mail</label>
         <input
           type="email"
           id="email"
@@ -24,8 +31,8 @@ const Form = () => {
           required
         />
       </div>
-      <div class="elem-group">
-        <label for="phone">Your Phone</label>
+      <div className="elem-group">
+        <label for="phone">Numero di Telefono</label>
         <input
           type="tel"
           id="phone"
@@ -35,8 +42,8 @@ const Form = () => {
         />
       </div>
       <hr />
-      <div class="elem-group inlined">
-        <label for="adult">Adults</label>
+      <div className="elem-group inlined">
+        <label for="adult">Adulti</label>
         <input
           type="number"
           id="adult"
@@ -46,8 +53,8 @@ const Form = () => {
           required
         />
       </div>
-      <div class="elem-group inlined">
-        <label for="child">Children</label>
+      <div className="elem-group inlined">
+        <label for="child">Bambini</label>
         <input
           type="number"
           id="child"
@@ -57,35 +64,37 @@ const Form = () => {
           required
         />
       </div>
-      <div class="elem-group inlined">
-        <label for="checkin-date">Check-in Date</label>
+      <div className="elem-group inlined">
+        <label for="checkin-date">Data Check-in</label>
         <input type="date" id="checkin-date" name="checkin" required />
       </div>
-      <div class="elem-group inlined">
-        <label for="checkout-date">Check-out Date</label>
+      <div className="elem-group inlined">
+        <label for="checkout-date">Data Check-out</label>
         <input type="date" id="checkout-date" name="checkout" required />
       </div>
-      <div class="elem-group">
-        <label for="room-selection">Select Room Preference</label>
+      <div className="elem-group">
+        <label for="room-selection">Seleziona la tipologia di stanza</label>
         <select id="room-selection" name="room_preference" required>
-          <option value="">Choose a Room from the List</option>
-          <option value="connecting">Connecting</option>
-          <option value="adjoining">Adjoining</option>
-          <option value="adjacent">Adjacent</option>
+          <option value="">Seleziona una tipologia dalla lista</option>
+          <option value="connecting">Singola</option>
+          <option value="adjoining">Doppia</option>
+          <option value="adjacent">Tripla</option>
         </select>
       </div>
       <hr />
-      <div class="elem-group">
-        <label for="message">Anything Else?</label>
+      <div className="elem-group">
+        <label for="message">Qualcosa d'altro?</label>
         <textarea
           id="message"
           name="visitor_message"
-          placeholder="Tell us anything else that might be important."
+          placeholder="Comunicaci qualsiasi cosa pensi sia importante"
           required
         ></textarea>
       </div>
-      <button type="submit">Book The Rooms</button>
+      <button className="formBut" type="submit">Book Now</button>
     </form>
+    </div>
+    </div>
   );
 };
 

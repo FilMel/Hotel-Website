@@ -1,61 +1,85 @@
-body {
-    width: 500px;
-    margin: 0 auto;
-    padding: 50px;
-  }
-  
-  div.elem-group {
-    margin: 20px 0;
-  }
-  
-  div.elem-group.inlined {
-    width: 49%;
-    display: inline-block;
-    float: left;
-    margin-left: 1%;
-  }
-  
-  label {
-    display: block;
-    font-family: 'Nanum Gothic';
-    padding-bottom: 10px;
-    font-size: 1.25em;
-  }
-  
-  input, select, textarea {
-    border-radius: 2px;
-    border: 2px solid #777;
-    box-sizing: border-box;
-    font-size: 1.25em;
-    font-family: 'Nanum Gothic';
-    width: 100%;
-    padding: 10px;
-  }
-  
-  div.elem-group.inlined input {
-    width: 95%;
-    display: inline-block;
-  }
-  
-  textarea {
-    height: 250px;
-  }
-  
-  hr {
-    border: 1px dotted #ccc;
-  }
-  
-  button {
-    height: 50px;
-    background: orange;
-    border: none;
-    color: white;
-    font-size: 1.25em;
-    font-family: 'Nanum Gothic';
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  button:hover {
-    border: 2px solid black;
-  }
+
+.page_wrapper{
+  display: flex;
+  justify-content: center;
+}
+.form_wrapper{
+  background-color: rgba(3, 3, 3, 0.589);
+  width: 35%; 
+  box-shadow: 10px 30px 30px 20px rgba(155, 20, 155, 0.308);
+ 
+}
+.form {
+  width: 700px;
+  margin: 0 auto;
+  padding: 50px;
+}
+
+div.elem-group {
+  margin: 20px 0;
+}
+
+div.elem-group.inlined {
+  width: 49%;
+  display: inline-block;
+
+  margin-left: 1%;
+}
+
+label {
+  display: block;
+  font-family: spartan;
+  font-style: initial;
+  font-size: 20px;
+  padding-bottom: 10px;
+  color: #fff;
+}
+
+input,
+select,
+textarea {
+  border-radius: 2px;
+  border: 2px solid #777;
+  box-sizing: border-box;
+  font-size: 1.2rem;
+  font-family: "Nanum Gothic";
+  width: 100%;
+  padding: 10px;
+}
+
+div.elem-group.inlined input {
+  width: 95%;
+  display: inline-block;
+}
+
+textarea {
+  height: 200px;
+}
+
+hr {
+  border: 1px dotted #ccc;
+}
+
+.formBut {
+  height: 50px;
+  background: linear-gradient(
+    80deg,
+    rgb(194, 60, 194) 0%,
+    rgb(60, 155, 103) 100%
+  );
+  border: none;
+  font-family: "Nanum Gothic";
+  border-radius: 4px;
+  cursor: pointer;
+  color: #242424;
+  padding: 8px 20px;
+  font-size: 1.5rem;
+}
+
+.formBut:hover {
+  border: 2px solid black;
+  transition: all 0.3s ease-out;
+  background: #fff;
+  color: #242424;
+  transition: 250ms;
+}

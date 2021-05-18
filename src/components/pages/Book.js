@@ -1,7 +1,8 @@
 import React from "react";
 import "../../App.css";
 import Form from "../BookingForm"
+import HeroSection from "../HeroSection";
 
 export default function Book() {
-  return <h1 className="book"><Form></Form> </h1>;
+  return <Form></Form>;
 }
