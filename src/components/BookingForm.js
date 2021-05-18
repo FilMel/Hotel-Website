@@ -37,7 +37,7 @@ const Form = () => {
           type="tel"
           id="phone"
           name="visitor_phone"
-          placeholder="498-348-3872"
+          placeholder="345-992-3872"
           required
         />
       </div>
