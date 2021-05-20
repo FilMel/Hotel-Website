@@ -1,18 +1,16 @@
-
-.page_wrapper{
+.page_wrapper {
   display: flex;
   justify-content: center;
 }
-.form_wrapper{
-  background-color: rgba(3, 3, 3, 0.589);
-   
+.form_wrapper {
+  background-color: rgba(211, 191, 191, 0.589);
   box-shadow: 10px 30px 30px 20px rgba(155, 20, 155, 0.308);
- 
 }
 .form {
   width: 700px;
   margin: 0 auto;
   padding: 50px;
+  text-align: center;
 }
 
 div.elem-group {
@@ -22,7 +20,6 @@ div.elem-group {
 div.elem-group.inlined {
   width: 49%;
   display: inline-block;
-
   margin-left: 1%;
 }
 
@@ -36,7 +33,6 @@ label {
 }
 
 input,
-select,
 textarea {
   border-radius: 2px;
   border: 2px solid #777;
@@ -45,6 +41,13 @@ textarea {
   font-family: "Nanum Gothic";
   width: 100%;
   padding: 10px;
+}
+
+select {
+  padding: 10px;
+  width: 50%;
+  font-size: 1.2rem;
+  font-family: "Nanum Gothic";
 }
 
 div.elem-group.inlined input {
@@ -74,6 +77,7 @@ hr {
   color: #242424;
   padding: 8px 20px;
   font-size: 1.5rem;
+  margin-top: 40px;
 }
 
 .formBut:hover {
