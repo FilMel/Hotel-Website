@@ -13,7 +13,7 @@ const Form = () => {
   const {
     watch,
     register,
-    formState: { errors },
+    formState: { errors, isValid },
   } = useForm({ mode: "all" });
 
   const completeFormStep = () => {
@@ -25,19 +25,34 @@ const Form = () => {
       return undefined;
     } else if (formStep === 0) {
       return (
-        <button onClick={completeFormStep} className="formBut" type="button">
+        <button
+          disabled={!isValid}
+          onClick={completeFormStep}
+          className="formBut"
+          type="button"
+        >
           Verifica disponibilità
         </button>
       );
     } else if (formStep === 3) {
       return (
-        <button onClick={completeFormStep} className="formBut" type="button">
+        <button
+          disabled={!isValid}
+          onClick={completeFormStep}
+          className="formBut"
+          type="button"
+        >
           Paga e Prenota
         </button>
       );
     } else {
       return (
-        <button onClick={completeFormStep} className="formBut" type="button">
+        <button
+          disabled={!isValid}
+          onClick={completeFormStep}
+          className="formBut"
+          type="button"
+        >
           Continua
         </button>
       );
@@ -67,35 +82,64 @@ const Form = () => {
                 <input
                   type="text"
                   id="name"
-                  {...register('visitor_name', {
+                  {...register("visitor_name", {
                     required: {
                       value: true,
-                      message: "Please type a username",
-                    }
+                    },
                   })}
-                  placeholder="John" />
-                {errors.username && <p>{errors.username.message}</p>}
+                  placeholder="John"
+                />
+                <br></br>
+                {errors.visitor_name && (
+                  <p className="Validation">Inserisci un Nome</p>
+                )}
+
                 <input
                   type="text"
                   id="surname"
-                  {...register('visitor_surname')}
-                  placeholder="Doe" />
+                  {...register("visitor_surname", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="Doe"
+                />
+
+                {errors.visitor_surname && (
+                  <p className="Validation">Inserisci un Cognome</p>
+                )}
               </div>
               <div className="elem-group">
                 <label for="email">La tua Mail</label>
                 <input
                   type="email"
                   id="email"
-                  {...register('visitor_email')}
-                  placeholder="john.doe@email.com" />
+                  {...register("visitor_email", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="john.doe@email.com"
+                />
+                {errors.visitor_email && (
+                  <p className="Validation">Inserisci una Mail</p>
+                )}
               </div>
               <div className="elem-group">
                 <label for="phone">Numero di Telefono</label>
                 <input
                   type="tel"
                   id="phone"
-                  {...register('visitor_phone')}
-                  placeholder="345-992-3872" />
+                  {...register("visitor_phone", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="345-992-3872"
+                />
+                {errors.visitor_phone && (
+                  <p className="Validation">Inserisci un numero di telefono</p>
+                )}
               </div>
             </section>
           )}
@@ -109,25 +153,39 @@ const Form = () => {
                 <input
                   type="text"
                   id="adr"
-                  name="address"
-                  placeholder="542 W. 15th Street"
+                  name="adress"
+                  {...register("adress", { required: true })}
                 />
+                {errors.adress && (
+                  <p className="Validation">Inserisci un inidirizzo valido</p>
+                )}
                 <label for="city">
                   <i class="fa fa-institution"></i> City
                 </label>
                 <input
                   type="text"
                   id="city"
-                  name="city"
                   placeholder="New York"
+                  {...register("city", { required: true })}
                 />
+                {errors.city && (
+                  <p className="Validation">Inserisci un inidirizzo valido</p>
+                )}
               </div>
 
               <div class="elem-group">
                 <label for="state">State</label>
                 <input type="text" id="state" name="state" placeholder="NY" />
                 <label for="zip">Zip</label>
-                <input type="text" id="zip" name="zip" placeholder="10001" />
+                <input
+                  type="text"
+                  id="zip"
+                  placeholder="10001"
+                  {...register("zip", { required: true })}
+                />
+                {errors.zip && (
+                  <p className="Validation">Inserisci un inidirizzo valido</p>
+                )}
               </div>
             </section>
           )}
@@ -148,16 +206,24 @@ const Form = () => {
                 <input
                   type="text"
                   id="cname"
-                  name="cardname"
                   placeholder="John More Doe"
+                  {...register("cardname", { required: true })}
                 />
+                  {errors.cardname && (
+                  <p className="Validation">Il campo non puo essere vuoto</p>
+                )}
+
                 <label for="ccnum">Credit card number</label>
                 <input
                   type="text"
                   id="ccnum"
-                  name="cardnumber"
                   placeholder="1111-2222-3333-4444"
+                  {...register("cardnumber", { required: true })}
                 />
+                {errors.cardnumber && (
+                  <p className="Validation">Inserisci un numero valido</p>
+                )}
+
                 <label for="expyear">Exp Year</label>
                 <input
                   type="text"
@@ -167,7 +233,10 @@ const Form = () => {
                 />
 
                 <label for="cvv">CVV</label>
-                <input type="text" id="cvv" name="cvv" placeholder="352" />
+                <input type="text" id="cvv" placeholder="352" {...register("cvv", { required: true })}/>
+                {errors.cvv && (
+                  <p className="Validation">Inserisci un cvv valido</p>
+                )}
               </div>
             </section>
           )}

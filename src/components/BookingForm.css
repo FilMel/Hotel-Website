@@ -87,3 +87,11 @@ hr {
   color: #242424;
   transition: 250ms;
 }
+
+.Validation{
+  color: rgb(182, 37, 37);
+  text-align:left;
+  margin-top: 2px;
+ padding-left: 5px;
+  font-size: small;
+}
