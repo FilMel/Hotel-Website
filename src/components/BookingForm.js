@@ -67,43 +67,35 @@ const Form = () => {
                 <input
                   type="text"
                   id="name"
-                  name="visitor_name"
-                  placeholder="John"
-                  ref={register({
+                  {...register('visitor_name', {
                     required: {
                       value: true,
                       message: "Please type a username",
                     }
                   })}
-                />
+                  placeholder="John" />
                 {errors.username && <p>{errors.username.message}</p>}
                 <input
                   type="text"
                   id="surname"
-                  name="visitor_surname"
-                  placeholder="Doe"
-                  ref={register()}
-                />
+                  {...register('visitor_surname')}
+                  placeholder="Doe" />
               </div>
               <div className="elem-group">
                 <label for="email">La tua Mail</label>
                 <input
                   type="email"
                   id="email"
-                  name="visitor_email"
-                  placeholder="john.doe@email.com"
-                  ref={register()}
-                />
+                  {...register('visitor_email')}
+                  placeholder="john.doe@email.com" />
               </div>
               <div className="elem-group">
                 <label for="phone">Numero di Telefono</label>
                 <input
                   type="tel"
                   id="phone"
-                  name="visitor_phone"
-                  placeholder="345-992-3872"
-                  ref={register()}
-                />
+                  {...register('visitor_phone')}
+                  placeholder="345-992-3872" />
               </div>
             </section>
           )}
