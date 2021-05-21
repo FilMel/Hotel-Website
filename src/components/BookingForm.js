@@ -6,10 +6,11 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 
 const Form = () => {
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
+  
+  /*Create a state for each form step*/
   const [formStep, setFormStep] = React.useState(0);
 
+  /*Input validation*/
   const {
     watch,
     register,
@@ -20,13 +21,14 @@ const Form = () => {
     setFormStep((cur) => cur + 1);
   };
 
+  /*Different buttons for different form-steps*/
   const renderButton = () => {
     if (formStep > 3) {
       return undefined;
     } else if (formStep === 0) {
       return (
         <button
-          disabled={!isValid}
+          disabled={!isValid}              /*Button disabled until all of the fields with required are filled*/
           onClick={completeFormStep}
           className="formBut"
           type="button"
@@ -59,6 +61,10 @@ const Form = () => {
     }
   };
 
+  /*Date validation*/
+  const [checkInDate, setCheckInDate] = useState(null);
+  const [checkOutDate, setCheckOutDate] = useState(null);
+
   const handleCheckInDate = (date) => {
     setCheckInDate(date);
     setCheckOutDate(null);
@@ -75,6 +81,42 @@ const Form = () => {
       </video>
       <div className="form_wrapper">
         <form className="form" action="reservation.php" method="post">
+          {/*Check availability section*/}
+          {formStep === 1 && (
+            <section>
+              <div className="elem-group inlined">
+                <label for="checkin-date">Data Check-in</label>
+                <DatePicker
+                  selected={checkInDate}
+                  minDate={new Date()}
+                  onChange={handleCheckInDate}
+                  dateFormat="dd/MM/yyyy"
+                ></DatePicker>
+              </div>
+              <div className="elem-group inlined">
+                <label for="checkout-date">Data Check-out</label>
+                <DatePicker
+                  selected={checkOutDate}
+                  minDate={checkInDate}
+                  onChange={handleCheckOutDate}
+                  dateFormat="dd/MM/yyyy"
+                ></DatePicker>
+              </div>
+              <div className="elem-group">
+                <label for="room-selection">
+                  Seleziona la tipologia di stanza
+                </label>
+                <select id="room-selection" name="room_preference" required>
+                  <option value="">Seleziona una tipologia dalla lista</option>
+                  <option value="connecting">Singola</option>
+                  <option value="adjoining">Doppia</option>
+                  <option value="adjacent">Tripla</option>
+                </select>
+              </div>
+            </section>
+          )}
+
+          {/*Insert client address section*/}
           {formStep === 0 && (
             <section>
               <div className="elem-group">
@@ -144,11 +186,12 @@ const Form = () => {
             </section>
           )}
 
+          {/*Billing information*/}
           {formStep === 2 && (
             <section>
               <div className="elem-group">
                 <label for="adr">
-                  <i class="fa fa-address-card-o"></i> Address
+                  <i class="fa fa-address-card-o"></i> inidirizzo
                 </label>
                 <input
                   type="text"
@@ -174,9 +217,7 @@ const Form = () => {
               </div>
 
               <div class="elem-group">
-                <label for="state">State</label>
-                <input type="text" id="state" name="state" placeholder="NY" />
-                <label for="zip">Zip</label>
+                <label for="zip">CAP</label>
                 <input
                   type="text"
                   id="zip"
@@ -184,12 +225,13 @@ const Form = () => {
                   {...register("zip", { required: true })}
                 />
                 {errors.zip && (
-                  <p className="Validation">Inserisci un inidirizzo valido</p>
+                  <p className="Validation">Inserisci un Cap valido</p>
                 )}
               </div>
             </section>
           )}
 
+          {/*Payment section*/}
           {formStep === 3 && (
             <section>
               <div>
@@ -202,18 +244,18 @@ const Form = () => {
                   <i class="fa fa-cc-mastercard"></i>
                   <i class="fa fa-cc-discover"></i>
                 </div>
-                <label for="cname">Name on Card</label>
+                <label for="cname">Intestatario carta</label>
                 <input
                   type="text"
                   id="cname"
                   placeholder="John More Doe"
                   {...register("cardname", { required: true })}
                 />
-                  {errors.cardname && (
-                  <p className="Validation">Il campo non puo essere vuoto</p>
+                {errors.cardname && (
+                  <p className="Validation">Inserisci un nome</p>
                 )}
 
-                <label for="ccnum">Credit card number</label>
+                <label for="ccnum">Numero Carta</label>
                 <input
                   type="text"
                   id="ccnum"
@@ -224,7 +266,7 @@ const Form = () => {
                   <p className="Validation">Inserisci un numero valido</p>
                 )}
 
-                <label for="expyear">Exp Year</label>
+                <label for="expyear">Data Scadenza</label>
                 <input
                   type="text"
                   id="expyear"
@@ -233,47 +275,20 @@ const Form = () => {
                 />
 
                 <label for="cvv">CVV</label>
-                <input type="text" id="cvv" placeholder="352" {...register("cvv", { required: true })}/>
+                <input
+                  type="text"
+                  id="cvv"
+                  placeholder="352"
+                  {...register("cvv", { required: true })}
+                />
                 {errors.cvv && (
                   <p className="Validation">Inserisci un cvv valido</p>
                 )}
               </div>
             </section>
           )}
-          {formStep === 1 && (
-            <section>
-              <div className="elem-group inlined">
-                <label for="checkin-date">Data Check-in</label>
-                <DatePicker
-                  selected={checkInDate}
-                  minDate={new Date()}
-                  onChange={handleCheckInDate}
-                  dateFormat="dd/MM/yyyy"
-                ></DatePicker>
-              </div>
-              <div className="elem-group inlined">
-                <label for="checkout-date">Data Check-out</label>
-                <DatePicker
-                  selected={checkOutDate}
-                  minDate={checkInDate}
-                  onChange={handleCheckOutDate}
-                  dateFormat="dd/MM/yyyy"
-                ></DatePicker>
-              </div>
-              <div className="elem-group">
-                <label for="room-selection">
-                  Seleziona la tipologia di stanza
-                </label>
-                <select id="room-selection" name="room_preference" required>
-                  <option value="">Seleziona una tipologia dalla lista</option>
-                  <option value="connecting">Singola</option>
-                  <option value="adjoining">Doppia</option>
-                  <option value="adjacent">Tripla</option>
-                </select>
-              </div>
-            </section>
-          )}
 
+          {/*Booking confirmation section*/}
           <hr />
           {formStep === 4 && (
             <section>
