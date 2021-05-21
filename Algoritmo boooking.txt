@@ -1,0 +1,8 @@
+Fil 23-25 green 
+
+dick 24-26 doppia
+
+1)var a=(select nome from camera,prenotazione where tipo == doppia and (checkin < 26 and checkout >24  ) == (select tipofk )
+2)var b=(select nome from camera where tipo = doppia)
+3)if a.count<b.count submit his booking and in the tipocamera field add select nome from b
+where not exists (select nomefk from camera,prenotazione where tipo == doppia and (checkin < 26 and checkout >24  ))
