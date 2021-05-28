@@ -6,7 +6,6 @@ import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
 
 const Form = () => {
-  
   /*Create a state for each form step*/
   const [formStep, setFormStep] = React.useState(0);
 
@@ -28,7 +27,9 @@ const Form = () => {
     } else if (formStep === 0) {
       return (
         <button
-          disabled={!isValid}              /*Button disabled until all of the fields with required are filled*/
+          disabled={
+            !isValid
+          } /*Button disabled until all of the fields with required are filled*/
           onClick={completeFormStep}
           className="formBut"
           type="button"
@@ -81,8 +82,9 @@ const Form = () => {
       </video>
       <div className="form_wrapper">
         <form className="form" action="reservation.php" method="post">
+          
           {/*Check availability section*/}
-          {formStep === 1 && (
+          {formStep === 0 && (
             <section>
               <div className="elem-group inlined">
                 <label for="checkin-date">Data Check-in</label>
@@ -116,8 +118,8 @@ const Form = () => {
             </section>
           )}
 
-          {/*Insert client address section*/}
-          {formStep === 0 && (
+          {/*Insert client section*/}
+          {formStep === 1 && (
             <section>
               <div className="elem-group">
                 <label for="name">Il tuo Nome Completo</label>
@@ -129,7 +131,7 @@ const Form = () => {
                       value: true,
                     },
                   })}
-                  placeholder="John"
+                  placeholder="Waleed"
                 />
                 <br></br>
                 {errors.visitor_name && (
@@ -144,7 +146,7 @@ const Form = () => {
                       value: true,
                     },
                   })}
-                  placeholder="Doe"
+                  placeholder="Leequat"
                 />
 
                 {errors.visitor_surname && (
@@ -161,7 +163,7 @@ const Form = () => {
                       value: true,
                     },
                   })}
-                  placeholder="john.doe@email.com"
+                  placeholder="waleed.leequat@email.com"
                 />
                 {errors.visitor_email && (
                   <p className="Validation">Inserisci una Mail</p>
@@ -190,8 +192,40 @@ const Form = () => {
           {formStep === 2 && (
             <section>
               <div className="elem-group">
+                <label for="nameIntF">Nome Completo</label>
+                <input
+                  type="text"
+                  id="nameIntF"
+                  {...register("IntF_name", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="Albert"
+                />
+                <br></br>
+                {errors.visitor_name && (
+                  <p className="Validation">Inserisci un Nome</p>
+                )}
+
+                <input
+                  type="text"
+                  id="surnameIntF"
+                  {...register("IntF_surname", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="Einstein"
+                />
+
+                {errors.visitor_surname && (
+                  <p className="Validation">Inserisci un Cognome</p>
+                )}
+              </div>
+              <div className="elem-group">
                 <label for="adr">
-                  <i class="fa fa-address-card-o"></i> inidirizzo
+                  <i class="fa fa-address-card-o"></i> Inidirizzo
                 </label>
                 <input
                   type="text"
@@ -203,7 +237,7 @@ const Form = () => {
                   <p className="Validation">Inserisci un inidirizzo valido</p>
                 )}
                 <label for="city">
-                  <i class="fa fa-institution"></i> City
+                  <i class="fa fa-institution"></i> Città
                 </label>
                 <input
                   type="text"
