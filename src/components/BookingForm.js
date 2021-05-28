@@ -88,32 +88,41 @@ const Form = () => {
             <section>
               <div className="elem-group inlined">
                 <label for="checkin-date">Data Check-in</label>
-                <DatePicker
-                  selected={checkInDate}
-                  minDate={new Date()}
-                  onChange={handleCheckInDate}
-                  dateFormat="dd/MM/yyyy"
-                ></DatePicker>
+                <input type = "date" min= {new Date().toISOString().split("T")[0]} {...register("checkin_date", {
+                    required: {
+                      value: true,
+                    }})}/>
+                    {errors.checkin_date && (
+                  <p className="Validation">Inserisci il checkout</p>
+                )}
               </div>
               <div className="elem-group inlined">
                 <label for="checkout-date">Data Check-out</label>
-                <DatePicker
-                  selected={checkOutDate}
-                  minDate={checkInDate}
-                  onChange={handleCheckOutDate}
-                  dateFormat="dd/MM/yyyy"
-                ></DatePicker>
+                <input type = "date" minDate ={new Date()} id="checkout-date" {...register("checkout_date", {
+                    required: {
+                      value: true,
+                    }})}/>
+                    {errors.checkout_date && (
+                  <p className="Validation">Inserisci il checkout</p>
+                )}
               </div>
               <div className="elem-group">
                 <label for="room-selection">
                   Seleziona la tipologia di stanza
                 </label>
-                <select id="room-selection" name="room_preference" required>
+                <select id="room-selection" {...register("room_preference", {
+                    required: {
+                      value: true,
+                    }})}>
+                   
                   <option value="">Seleziona una tipologia dalla lista</option>
-                  <option value="connecting">Singola</option>
-                  <option value="adjoining">Doppia</option>
-                  <option value="adjacent">Tripla</option>
+                  <option value="Singola">Singola</option>
+                  <option value="Doppia">Doppia</option>
+                  <option value="Tripla">Tripla</option>
                 </select>
+                {errors.room_preference && (
+                  <p className="Validation">Inserisci il checkout</p>
+                )}
               </div>
             </section>
           )}
@@ -172,8 +181,15 @@ const Form = () => {
               <div className="elem-group">
                 <label for="phone">Numero di Telefono</label>
                 <input
-                  type="tel"
+                  type="text"
                   id="phone"
+                  onChange={(event) => {
+                    if (isNaN(Number(event.target.value))) {
+                      return;
+                    } else {
+                      this.setState({ value: event.target.value });
+                    }
+                  }}
                   {...register("visitor_phone", {
                     required: {
                       value: true,
@@ -204,7 +220,7 @@ const Form = () => {
                   placeholder="Albert"
                 />
                 <br></br>
-                {errors.visitor_name && (
+                {errors.IntF_name && (
                   <p className="Validation">Inserisci un Nome</p>
                 )}
 
@@ -219,7 +235,7 @@ const Form = () => {
                   placeholder="Einstein"
                 />
 
-                {errors.visitor_surname && (
+                {errors.IntF_surname && (
                   <p className="Validation">Inserisci un Cognome</p>
                 )}
               </div>
@@ -253,7 +269,7 @@ const Form = () => {
               <div class="elem-group">
                 <label for="zip">CAP</label>
                 <input
-                  type="text"
+                  type="number"
                   id="zip"
                   placeholder="10001"
                   {...register("zip", { required: true })}
@@ -291,7 +307,7 @@ const Form = () => {
 
                 <label for="ccnum">Numero Carta</label>
                 <input
-                  type="text"
+                  type="number"
                   id="ccnum"
                   placeholder="1111-2222-3333-4444"
                   {...register("cardnumber", { required: true })}
@@ -302,15 +318,16 @@ const Form = () => {
 
                 <label for="expyear">Data Scadenza</label>
                 <input
-                  type="text"
+                  type="date"
                   id="expyear"
-                  name="expyear"
-                  placeholder="2018"
-                />
+                  {...register("exp_date", { required: true })}/>
+                  {errors.exp_date && (
+                    <p className="Validation">Inserisci una data di Scadenza</p>
+                  )}
 
                 <label for="cvv">CVV</label>
                 <input
-                  type="text"
+                  type="number"
                   id="cvv"
                   placeholder="352"
                   {...register("cvv", { required: true })}
