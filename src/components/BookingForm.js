@@ -93,7 +93,7 @@ const Form = () => {
                       value: true,
                     }})}/>
                     {errors.checkin_date && (
-                  <p className="Validation">Inserisci il checkout</p>
+                  <p className="Validation">Inserisci il checkin</p>
                 )}
               </div>
               <div className="elem-group inlined">
