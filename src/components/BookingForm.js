@@ -1,18 +1,47 @@
 import React, { useState } from "react";
 import "./BookingForm.css";
 import Cyber from "./videos/cyber.mp4";
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useForm } from "react-hook-form";
+import Axios from "axios";
+
+const api = Axios.create({
+  baseURL: `http://localhost:4000/prenotazioni`,
+});
 
 const Form = () => {
   /*Create a state for each form step*/
   const [formStep, setFormStep] = React.useState(0);
 
+  const checkAvailability = () => {
+    api.get("/").then((res) => {
+      let count = 0;
+      if (res.data.length !== 0) {
+        for (const result in res.data) {
+          count =
+            getValues("checkin") < result.CheckOut &&
+            getValues("checkout") > result.CheckIn &&
+            getValues("roomName") === result.Nome
+              ? count + 1
+              : count;
+        }
+      }
+      console.log(getValues());
+    });
+  };
+
+  const bookRoom = () => {
+    const bookingData = getValues();
+    api.post("/prenota", bookingData).then((res) => {
+      console.log("You booked your room");
+    });
+  };
+
   /*Input validation*/
   const {
     watch,
     register,
+    getValues,
     formState: { errors, isValid },
   } = useForm({ mode: "all" });
 
@@ -30,7 +59,10 @@ const Form = () => {
           disabled={
             !isValid
           } /*Button disabled until all of the fields with required are filled*/
-          onClick={completeFormStep}
+          onClick={() => {
+            completeFormStep();
+            checkAvailability();
+          }}
           className="formBut"
           type="button"
         >
@@ -41,7 +73,7 @@ const Form = () => {
       return (
         <button
           disabled={!isValid}
-          onClick={completeFormStep}
+          onClick={bookRoom}
           className="formBut"
           type="button"
         >
@@ -62,19 +94,6 @@ const Form = () => {
     }
   };
 
-  /*Date validation*/
-  const [checkInDate, setCheckInDate] = useState(null);
-  const [checkOutDate, setCheckOutDate] = useState(null);
-
-  const handleCheckInDate = (date) => {
-    setCheckInDate(date);
-    setCheckOutDate(null);
-  };
-
-  const handleCheckOutDate = (date) => {
-    setCheckOutDate(date);
-  };
-
   return (
     <div className="page_wrapper">
       <video autoPlay loop muted>
@@ -82,45 +101,62 @@ const Form = () => {
       </video>
       <div className="form_wrapper">
         <form className="form" action="reservation.php" method="post">
-          
           {/*Check availability section*/}
           {formStep === 0 && (
             <section>
               <div className="elem-group inlined">
-                <label for="checkin-date">Data Check-in</label>
-                <input type = "date" min= {new Date().toISOString().split("T")[0]} {...register("checkin_date", {
+                <label for="checkin">Data Check-in</label>
+                <input
+                  id="checkin"
+                  type="date"
+                  min={new Date().toISOString().split("T")[0]}
+                  {...register("checkin", {
                     required: {
                       value: true,
-                    }})}/>
-                    {errors.checkin_date && (
+                    },
+                  })}
+                />
+                {errors.checkin && (
                   <p className="Validation">Inserisci il checkin</p>
                 )}
               </div>
               <div className="elem-group inlined">
-                <label for="checkout-date">Data Check-out</label>
-                <input type = "date" minDate ={new Date()} id="checkout-date" {...register("checkout_date", {
+                <label for="checkout">Data Check-out</label>
+                <input
+                  type="date"
+                  id="checkout"
+                  minDate={new Date()}
+                  {...register("checkout", {
                     required: {
                       value: true,
-                    }})}/>
-                    {errors.checkout_date && (
+                    },
+                  })}
+                />
+                {errors.checkout && (
                   <p className="Validation">Inserisci il checkout</p>
                 )}
               </div>
               <div className="elem-group">
-                <label for="room-selection">
-                  Seleziona la tipologia di stanza
-                </label>
-                <select id="room-selection" {...register("room_preference", {
+                <label for="roomName">Seleziona la tipologia di stanza</label>
+                <select
+                  id="roomName"
+                  {...register("roomName", {
                     required: {
                       value: true,
-                    }})}>
-                   
-                  <option value="">Seleziona una tipologia dalla lista</option>
-                  <option value="Singola">Singola</option>
-                  <option value="Doppia">Doppia</option>
-                  <option value="Tripla">Tripla</option>
+                    },
+                  })}
+                >
+                  <option value="">Seleziona la camera desiderata</option>
+                  <option value="Verde">Verde - Singola</option>
+                  <option value="Blu">Blu - Doppia</option>
+                  <option value="Bordeaux">Bordeaux - Matrimoniale</option>
+                  <option value="Bianca">Bianca - Matrimoniale</option>
+                  <option value="Nera">Nera - Matrimoniale</option>
+                  <option value="Rossa">Rossa - Tripla</option>
+                  <option value="Gialla">Gialla - Quadrupla</option>
+
                 </select>
-                {errors.room_preference && (
+                {errors.roomType && (
                   <p className="Validation">Inserisci il checkout</p>
                 )}
               </div>
@@ -160,6 +196,22 @@ const Form = () => {
 
                 {errors.visitor_surname && (
                   <p className="Validation">Inserisci un Cognome</p>
+                )}
+
+                <label for="passport">Numero del passaporto</label>
+                <input
+                  type="text"
+                  id="passport"
+                  {...register("passport", {
+                    required: {
+                      value: true,
+                    },
+                  })}
+                  placeholder="ar67888438"
+                />
+                <br></br>
+                {errors.passport && (
+                  <p className="Validation">Inserisci un numero</p>
                 )}
               </div>
               <div className="elem-group">
@@ -320,10 +372,11 @@ const Form = () => {
                 <input
                   type="date"
                   id="expyear"
-                  {...register("exp_date", { required: true })}/>
-                  {errors.exp_date && (
-                    <p className="Validation">Inserisci una data di Scadenza</p>
-                  )}
+                  {...register("exp_date", { required: true })}
+                />
+                {errors.exp_date && (
+                  <p className="Validation">Inserisci una data di Scadenza</p>
+                )}
 
                 <label for="cvv">CVV</label>
                 <input
