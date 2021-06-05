@@ -6,34 +6,26 @@ import { useForm } from "react-hook-form";
 import Axios from "axios";
 
 const api = Axios.create({
-  baseURL: `http://localhost:4000/prenotazioni`,
+  baseURL: `http://localhost:4000`,
 });
 
 const Form = () => {
   /*Create a state for each form step*/
-  const [formStep, setFormStep] = React.useState(0);
+  const [formStep, setFormStep] = useState(0);
 
-  const checkAvailability = () => {
-    api.get("/").then((res) => {
-      let count = 0;
-      if (res.data.length !== 0) {
-        for (const result in res.data) {
-          count =
-            getValues("checkin") < result.CheckOut &&
-            getValues("checkout") > result.CheckIn &&
-            getValues("roomName") === result.Nome
-              ? count + 1
-              : count;
-        }
-      }
-      console.log(getValues());
+  const checkAvailability = async () => {
+    const res = await api.post("/", {
+      ...getValues("checkin"),
+      ...getValues("checkout"),
+      ...getValues("roomName"),
     });
+    return res.data.isAvailable;
   };
 
   const bookRoom = () => {
     const bookingData = getValues();
     api.post("/prenota", bookingData).then((res) => {
-      console.log("You booked your room");
+      return res.data.isInserted;
     });
   };
 
@@ -59,9 +51,15 @@ const Form = () => {
           disabled={
             !isValid
           } /*Button disabled until all of the fields with required are filled*/
-          onClick={() => {
-            completeFormStep();
-            checkAvailability();
+          onClick={async () => {
+            const valid = await checkAvailability();
+            if (valid) {
+              completeFormStep();
+            } else {
+              alert(
+                "La camera selezionata non è disponibile per il periodo selezionato"
+              );
+            }
           }}
           className="formBut"
           type="button"
@@ -154,7 +152,6 @@ const Form = () => {
                   <option value="Nera">Nera - Matrimoniale</option>
                   <option value="Rossa">Rossa - Tripla</option>
                   <option value="Gialla">Gialla - Quadrupla</option>
-
                 </select>
                 {errors.roomType && (
                   <p className="Validation">Inserisci il checkout</p>
